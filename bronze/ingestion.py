@@ -4,7 +4,7 @@ import time
 import os
 from datetime import date
 
-BATCH_SIZE = 50
+BATCH_SIZE = 300
 RUN_DATE = date.today().isoformat()
 
 df = pd.read_csv('../config/emiten_code_only.csv')
@@ -15,16 +15,17 @@ bronze_dir = f'../bronze/run_date={RUN_DATE}'
 if not os.path.exists(bronze_dir):
     os.makedirs(bronze_dir)
 
+index = 0
 for i in range(0, len(codes), BATCH_SIZE):
     batch = codes[i:i + BATCH_SIZE]
-
-    yf_data = yf.download(batch, progress=False)
+    yf_data = yf.download(batch, progress=True)
+    index = index + 1
 
     if yf_data.empty:
         continue
 
     yf_data.to_parquet(
-        f'{bronze_dir}/batch_{i}.parquet'
+        f'{bronze_dir}/batch_{index}.parquet'
     )
 
     time.sleep(2)
