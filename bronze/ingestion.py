@@ -1,31 +1,32 @@
 import yfinance as yf
 import pandas as pd
 import time
-import os
 from datetime import date
+from pathlib import Path
 
-BATCH_SIZE = 300
-RUN_DATE = date.today().isoformat()
+def run_bronze():
+    BATCH_SIZE = 300
+    RUN_DATE = date.today().isoformat()
 
-df = pd.read_csv('../config/emiten_code_only.csv')
-codes = df['Kode_JK'].to_list()
+    BASE_DIR = Path(__file__).resolve().parents[1]
 
-bronze_dir = f'../bronze/run_date={RUN_DATE}'
+    config_path = BASE_DIR / "config" / "emiten_code_only.csv"
+    bronze_dir = BASE_DIR / "bronze" / f"run_date={RUN_DATE}"
 
-if not os.path.exists(bronze_dir):
-    os.makedirs(bronze_dir)
+    bronze_dir.mkdir(parents=True, exist_ok=True)
 
-index = 0
-for i in range(0, len(codes), BATCH_SIZE):
-    batch = codes[i:i + BATCH_SIZE]
-    yf_data = yf.download(batch, progress=True)
-    index = index + 1
+    df = pd.read_csv(config_path)
+    codes = df["Kode_JK"].to_list()
 
-    if yf_data.empty:
-        continue
+    index = 0
+    for i in range(0, len(codes), BATCH_SIZE):
+        batch = codes[i:i + BATCH_SIZE]
+        index += 1
 
-    yf_data.to_parquet(
-        f'{bronze_dir}/batch_{index}.parquet'
-    )
+        yf_data = yf.download(batch, progress=True)
 
-    time.sleep(2)
+        if yf_data.empty:
+            continue
+
+        yf_data.to_parquet(bronze_dir / f"batch_{index}.parquet")
+        time.sleep(2)
