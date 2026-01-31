@@ -1,0 +1,8 @@
+bronze/
+silver/
+*.parquet
+*.csv
+
+
+__pycache__/
+
