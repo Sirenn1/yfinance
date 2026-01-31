@@ -5,15 +5,15 @@ Bronze layer stores raw market data exactly as received from the source, in part
 Silver layer transforms the raw data into a clean, normalized tabular format suitable for analytics and downstream processing.
 
 
-**Bronze Layer
-**
+# Bronze Layer
+
 Raw data downloaded from Yahoo Finance
 Stored as Parquet files
 Partitioned by run_date
 No transformations applied (schema preserved)
 
-**Silver Layer
-**
+# Silver Layer
+
 Normalized, analytics-ready
 One row per (date, ticker)
 Columns include price metrics such as open, high, low, close, and volume
