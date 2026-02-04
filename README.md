@@ -1,5 +1,5 @@
 ## Yahoo Finance Pipeline
-This pipeline ingests stock market data from yahoo finance (yfinance), stores raw data in a bronze layer (parquet format), and transforms it into a normalized silver layer for analytics.
+This pipeline ingests the Indoneisan stock market data from yahoo finance (yfinance), stores raw data in a bronze layer (parquet format), and transforms it into a normalized silver layer for analytics using pandas (python).
 
 Bronze layer stores raw market data exactly as received from the source, in partitioned Parquet files.
 Silver layer transforms the raw data into a clean, normalized tabular format suitable for analytics and downstream processing.
