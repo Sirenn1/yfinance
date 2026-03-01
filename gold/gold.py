@@ -21,3 +21,8 @@ def run_gold():
     df[["daily_return_pct", "ma_20"]] = df[["daily_return_pct", "ma_20"]].round(2)
     daily_metrics = df[["date", "ticker", "close", "volume", "daily_return_pct", "ma_20"]]
     daily_metrics.to_csv(gold_path / "daily_metrics.csv", index=False)
+
+    latest = daily_metrics.groupby("ticker").tail(1).copy()
+    latest["above_ma_20"] = latest["close"] > latest["ma_20"]
+    latest = latest.sort_values("daily_return_pct", ascending=False)
+    latest.to_csv(gold_path / "latest_snapshot.csv", index=False)
