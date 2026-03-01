@@ -1,6 +1,8 @@
 import pandas as pd
 from pathlib import Path
 
+MA_WINDOW = 20
+
 
 def run_gold():
     BASE_DIR = Path(__file__).resolve().parents[1]
@@ -14,7 +16,8 @@ def run_gold():
 
     by_ticker = df.groupby("ticker")["close"]
     df["daily_return_pct"] = by_ticker.pct_change() * 100
+    df["ma_20"] = by_ticker.transform(lambda s: s.rolling(MA_WINDOW, min_periods=1).mean())
 
-    df[["daily_return_pct"]] = df[["daily_return_pct"]].round(2)
-    daily_metrics = df[["date", "ticker", "close", "volume", "daily_return_pct"]]
+    df[["daily_return_pct", "ma_20"]] = df[["daily_return_pct", "ma_20"]].round(2)
+    daily_metrics = df[["date", "ticker", "close", "volume", "daily_return_pct", "ma_20"]]
     daily_metrics.to_csv(gold_path / "daily_metrics.csv", index=False)
