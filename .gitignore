@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.DS_Store
+
+# Generated pipeline data
+bronze/run_date=*/
+silver/*.csv
+gold/*.csv
