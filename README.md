@@ -25,3 +25,16 @@ config/emiten_code_only.csv   (list of ~780 IDX tickers)
 │ gold/*.csv           │  moving average, and a latest snapshot per ticker
 └──────────────────────┘
 ```
+
+## Layers
+
+| Layer  | Output | Description |
+|--------|--------|-------------|
+| Bronze | `bronze/run_date=YYYY-MM-DD/batch_N.parquet` | Raw data, as returned by the API |
+| Silver | `silver/silver.csv` | Columns: `date, ticker, open, high, low, close, volume` |
+| Gold   | `gold/daily_metrics.csv` | Per ticker per day: `close, volume, daily_return_pct, ma_20` |
+| Gold   | `gold/latest_snapshot.csv` | Most recent day per ticker, with `above_ma_20` flag, sorted by top gainers |
+
+## Ticker list
+
+`config/DaftarSaham.csv` is the full list of IDX-listed companies. `config/load_data.py` filters out stocks on the special monitoring board (*Pemantauan Khusus*) and adds the `.JK` suffix used by Yahoo Finance, producing `config/emiten_code_only.csv`.
