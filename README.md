@@ -38,3 +38,19 @@ config/emiten_code_only.csv   (list of ~780 IDX tickers)
 ## Ticker list
 
 `config/DaftarSaham.csv` is the full list of IDX-listed companies. `config/load_data.py` filters out stocks on the special monitoring board (*Pemantauan Khusus*) and adds the `.JK` suffix used by Yahoo Finance, producing `config/emiten_code_only.csv`.
+
+## How to run
+
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+python main.py
+```
+
+## Tech stack
+
+- Python, pandas
+- yfinance (data source)
+- Parquet (pyarrow) for raw storage
