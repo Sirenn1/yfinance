@@ -5,6 +5,8 @@ from datetime import date
 from pathlib import Path
 
 def run_bronze():
+    print("Running Ingestion")
+
     BATCH_SIZE = 300
     RUN_DATE = date.today().isoformat()
 
@@ -30,3 +32,4 @@ def run_bronze():
 
         yf_data.to_parquet(bronze_dir / f"batch_{index}.parquet")
         time.sleep(2)
+        print(f"Saved {len(codes)} tickers to Bronze layer as Parquet files")

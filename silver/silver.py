@@ -4,6 +4,7 @@ import pandas as pd
 from pathlib import Path
 
 def run_silver():
+    print("Running Silver")
     RUN_DATE = date.today().isoformat()
 
     BASE_DIR = Path(__file__).resolve().parents[1]
@@ -42,3 +43,4 @@ def run_silver():
 
     silver.columns = silver.columns.str.lower()
     silver.to_csv(silver_path / "silver.csv", index=False)
+    print(f'Saved file to {silver_path}/silver.csv')
