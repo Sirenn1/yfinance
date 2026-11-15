@@ -8,3 +8,11 @@ venv/
 bronze/run_date=*/
 silver/*.csv
 gold/*.csv
+
+.env
+*.tfstate
+*.tfstate.*
+.terraform/
+target/
+logs/
+dbt_packages/
