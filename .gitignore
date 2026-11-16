@@ -16,3 +16,4 @@ gold/*.csv
 target/
 logs/
 dbt_packages/
+reference/baseline_data/
