@@ -5,9 +5,11 @@ venv/
 .DS_Store
 
 # Generated pipeline data
+extract/bronze/
 bronze/run_date=*/
 silver/*.csv
 gold/*.csv
+.pytest_cache/
 
 .env
 *.tfstate
